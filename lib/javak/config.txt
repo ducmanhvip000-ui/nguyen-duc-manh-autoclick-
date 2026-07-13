@@ -1,0 +1,2 @@
+AUTOCLICK=true
+AUTHOR=Nguyen Duc Manh
