@@ -1,1 +1,0 @@
-export async function modJar(buffer){return buffer;}
