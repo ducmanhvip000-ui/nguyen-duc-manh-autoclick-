@@ -1,106 +1,39 @@
-<!DOCTYPE html>
 <html>
 <head>
-    <title>Mod Auto Click Online (JS Version)</title>
-    <meta http-equiv="content-type" content="application/xhtml+xml; charset=utf-8"/>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+<title>mod auto click</title>
+<meta http-equiv="content-type" content="application/xhtml xml; charset=utf-8"/>
 </head>
 <body>
-    <font color="black">Tool giúp bạn thêm chức năng auto click vào java online (Chạy hoàn toàn trên trình duyệt)<br></font>
-    <br>
-    <font color="red">
-        Tải lên file .zip, .jar hoặc _jar:<br/>
-        <input type="file" id="fileInput" accept=".zip,.jar,._jar"><br/><br>
-        Nhập mã phím cài đặt auto (vd phím gọi nhập là -10):<br>
-        <input type="text" id="phim" value="-10"><br><br>
-        <button id="processBtn">Xong!</button>
-    </font>
-    <br><br>
-    <div id="status"></div>
-    <br>
-    <b>DANH SÁCH MÃ PHÍM:</b><br>
-    Phím chọn giữa : -5<br>Phím gọi : -10<br>phím chọn trái : -6<br>phím chọn phải : -7<br>
-    phím chuyển lên : -1<br>phím chuyển xuống : -2<br>phím chuyển trái : -3<br>phím chuyển phải : -4<br>
-    <i>... (và các phím số khác như bản gốc)</i>
-
-    <script>
-        document.getElementById('processBtn').addEventListener('click', async function() {
-            const fileInput = document.getElementById('fileInput');
-            const phim = document.getElementById('phim').value;
-            const statusDiv = document.getElementById('status');
-
-            if (fileInput.files.length === 0) {
-                statusDiv.innerHTML = '<font color="black"><b>Vui lòng chọn file!</b></font>';
-                return;
-            }
-
-            const file = fileInput.files[0];
-            statusDiv.innerHTML = 'Đang xử lý...';
-
-            try {
-                // Đọc file jar/zip do người dùng up lên
-                const zip = new JSZip();
-                await zip.loadAsync(file);
-
-                // Quét và mod các class
-                for (let [filename, zipEntry] of Object.entries(zip.files)) {
-                    if (!zipEntry.dir && filename.endsWith('.class')) {
-                        let content = await zipEntry.async("binarystring");
-                        
-                        // Thay thế chuỗi như logic PHP cũ
-                        content = content.replace(/javax\/microedition\/lcdui\/Canvas/g, 'javak/microedition/lcdui/Kalvaz');
-                        content = content.replace(/keyPressed/g, 'KeyPressed');
-                        content = content.replace(/keyReleased/g, 'KeyReleased');
-                        content = content.replace(/keyRepeated/g, 'KeyRepeated');
-                        content = content.replace(/javax\/microedition\/midlet\/MIDlet/g, 'javak/microedition/midlet/MiDlet');
-                        content = content.replace(/Ljavak\/microedition\/midlet\/MiDlet;\)Ljavax\/microedition\/lcdui\/Display/g, 'Ljavax\/microedition\/midlet\/MIDlet;\)Ljavax\/microedition\/lcdui\/Display');
-                        content = content.replace(/javak\/microedition\/midlet\/MiDletStateChangeException/g, 'javax\/microedition\/midlet\/MIDletStateChangeException');
-                        
-                        zip.file(filename, content, {binary: true});
-                    }
-                }
-
-                // Cập nhật MANIFEST
-                if (zip.file("META-INF/MANIFEST.MF")) {
-                    let manifest = await zip.file("META-INF/MANIFEST.MF").async("string");
-                    manifest = manifest.replace('MIDlet-Delete-Confirm: ', 'MIDlet-Delete-Confirm: Modded via Web JS ////');
-                    zip.file("META-INF/MANIFEST.MF", manifest);
-                }
-
-                // Ghi file config từ mã phím nhập vào
-                zip.file("javak/config.txt", phim);
-                zip.file("khuonga2.txt", "mod addlight online by khuonga2 (JS Port)");
-
-                // LƯU Ý: Chạy trên web tĩnh, bạn cần phải tải trước các file class của 'javak' vào Blob hoặc array buffer.
-                // Để code này hoạt động 100%, bạn cần fetch các file Kalvaz.class, MiDlet.class từ thư mục của GitHub Repo.
-                const classFiles = ['javak/K', 'javak/microedition/lcdui/Kalvaz.class', 'javak/microedition/lcdui/KalvazAutoClick.class', 'javak/microedition/lcdui/Kalvazkey.class', 'javak/microedition/midlet/MiDlet.class', 'javak/microedition/midlet/MiDletKeySelector.class'];
-                
-                for (let path of classFiles) {
-                    try {
-                        let response = await fetch(path);
-                        if(response.ok) {
-                            let blob = await response.blob();
-                            zip.file(path, blob);
-                        }
-                    } catch (e) {
-                        console.warn("Không tìm thấy file để chèn: " + path);
-                    }
-                }
-
-                // Đóng gói và tải xuống
-                const finalBlob = await zip.generateAsync({type:"blob"});
-                saveAs(finalBlob, "modded_" + file.name.replace('.zip', '.jar'));
-                statusDiv.innerHTML = '<font color="blue"><b>Mod thành công! Đang tải xuống...</b></font>';
-
-            } catch (error) {
-                console.error(error);
-                statusDiv.innerHTML = '<font color="red">Mod thất bại: ' + error.message + '</font>';
-            }
-        });
-    </script>
-</body>
-</html>
+<?php
+if(!file_exists('file')){
+mkdir('file');}
+echo '<font color="black">toot giúp bạn thêm chức năng auto click vào java online <br></font>';
+echo '<br>';
+$text='code by khuonga2';
+$submit=$_POST["submit"];
+if(!$submit){echo'<form method="post" enctype="multipart/form-data"><font color="red">Tải lên file.zip .jar _jar:<br/><input type="file" name="file"><br/>hoặc import link file .zip .jar (không dùng link xtgem,wmp)<br>
+<input type="text" name="link" value="http://">
+<br>Nhập mã phím cài đặt auto </font>( vd phím gọi nhập là -10 ,danh sách mã phím ở dưới,sau khi mod xong ,giữ phím cài đặt để sử dụng)<br><input type="text"name=
+"phim"value="-10"><br><input type="submit" name="submit" value="xong!"></form><br><br>DANH SÁCH MÃ PHÍM:<br>
+Phím chọn giữa : -5<br>
+Phím gọi : -10<br>
+phím chọn trái : -6<br>
+phím chọn phải : -7<br>
+phím chuyển lên : -1<br>
+phím chuyển xuống : -2<br>
+phím chuyển trái : -3<br>
+phím chuyển phải : -4<br>
+phím số 1 : 49<br>
+phím số 2 : 50<br>
+phím số 3 : 51<br>
+phím số 4 : 52<br>
+phím số 5 : 53<br>
+phím số 6 : 54<br>
+phím số 7 : 55<br>
+phím số 8 : 56<br>
+phím số 9 : 57<br>
+phím số 0 : 48<br>
+phím sao (*) : 42<br>
 phím # : 35<br>';}else{$file=$_FILES['file']['name'];
 $link=$_POST['link'];
 $phim=$_POST['phim'];

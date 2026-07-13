@@ -1,12 +1,19 @@
 <!doctype html>
-<html lang="vi">
-<head><meta charset="utf-8"><title>Mod Auto Click Java</title></head>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Nguyen Duc Manh AutoClick VIP</title>
+<style>
+body{font-family:Arial;padding:20px;background:#111;color:#fff}
+button{padding:12px;margin-top:15px}
+</style>
+</head>
 <body>
-<h3>Mod Auto Click Java (JS)</h3>
-<input id="jar" type="file" accept=".jar,.zip"><br><br>
-<label>Mã phím cài đặt:</label>
-<input id="key" value="-10"><br><br>
-<button id="run">Mod và tải JAR</button>
+<h2>AutoClick VIP JS</h2>
+<p>Upload file JAR và chọn các file .class trong javak</p>
+<input id="jar" type="file" accept=".jar"><br>
+<input id="classes" type="file" accept=".class" multiple><br>
+<button onclick="buildJar()">Tạo JAR VIP</button>
 <p id="msg"></p>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 <script src="script.js"></script>
