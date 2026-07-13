@@ -1,0 +1,1 @@
+# Nguyễn Đức Mạnh AutoClick\n\nNext.js + Vercel project.
