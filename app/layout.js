@@ -1,1 +1,2 @@
-export const metadata={title:"Nguyễn Đức Mạnh AutoClick"}; export default function RootLayout({children}){return <html lang="vi"><body>{children}</body></html>}
+export const metadata={title:'Nguyễn Đức Mạnh AutoClick'};
+export default function RootLayout({children}){return <html lang="vi"><body>{children}</body></html>}
