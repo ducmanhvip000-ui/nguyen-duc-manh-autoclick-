@@ -1,2 +1,1 @@
-AUTOCLICK=true
-AUTHOR=Nguyen Duc Manh
+-10
