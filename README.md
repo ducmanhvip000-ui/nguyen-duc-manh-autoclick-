@@ -1,1 +1,2 @@
-# Nguyễn Đức Mạnh AutoClick\n\nNext.js + Vercel project.
+# Nguyễn Đức Mạnh AutoClick
+Next.js + Vercel with javak files included.
